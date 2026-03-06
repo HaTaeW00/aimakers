@@ -100,32 +100,54 @@ graph TB
 
 ```
 aimakers/
-├── 📄 README.md                  # 프로젝트 문서
-├── 📄 sequence.cpp               # OBC 충전 시퀀스 상태머신 (교육용 레퍼런스)
-├── 📄 02_02.md                   # 회의록
+├── 📄 README.md                          # 프로젝트 문서
+├── 📄 sequence.cpp                       # OBC 충전 시퀀스 상태머신 (교육용 레퍼런스)
+├── 📄 02_02.md                           # 회의록
 │
-├── 📂 lhj/                       # 🧑‍💻 이현준 — Fault 진단 엔진
-│   ├── fault.h                   #   고장 코드/상태/구조체 정의
-│   ├── fault.c                   #   12종 고장 진단 로직 구현
-│   ├── fault_test.c              #   단위 테스트 코드
-│   ├── input.h / input.c         #   CSV 입력 파싱 모듈
-│   ├── main.c                    #   진단 엔진 메인 (CLI)
-│   ├── pyqt_ui.py                #   PyQt5 GUI (초기 버전)
-│   ├── 📂 fault_log_data/        #   테스트용 고장 데이터 (CSV)
-│   └── 📂 OBC_FAULT_LOGIC/       #   Visual Studio 프로젝트
+├── 📂 lhj/                               # 🧑‍💻 이현준 — Fault 진단 엔진
+│   ├── fault.h                           #   고장 코드/상태/구조체 정의
+│   ├── fault.c                           #   12종 고장 진단 로직 구현
+│   ├── fault_test.c                      #   단위 테스트 코드
+│   ├── input.h                           #   CSV 입력 파싱 헤더
+│   ├── input.c                           #   CSV 입력 파싱 구현
+│   ├── main.c                            #   진단 엔진 메인 (CLI)
+│   ├── 📂 Debug/                         #   빌드 출력
+│   ├── 📂 OBC_FAULT_LOGIC/              #   Visual Studio 프로젝트 (Debug)
+│   └── 📂 fault_log_data/               #   테스트용 고장 데이터
+│       ├── Fault1.csv
+│       ├── Fault2.csv
+│       ├── Fault3.csv
+│       └── Fault4.csv
 │
-├── 📂 htw/                       # 🧑‍💻 하태우 — 개별 고장 코드 개발
-│   ├── 📂 code/                  #   고장별 진단 코드 (fault_no7.c, fault_no8.c)
-│   └── 📂 data/                  #   테스트 데이터 (fault_no7.csv)
+├── 📂 htw/                               # 🧑‍💻 하태우 — 개별 고장 코드 개발 & GUI
+│   ├── 📂 code/                          #   고장별 진단 코드 & 도구
+│   │   ├── fault_no7.c                   #     Fault 0x07 (CAN 통신) 진단 코드
+│   │   ├── fault_no8.c                   #     Fault 0x08 (절연 이상) 진단 코드
+│   │   ├── pyqt_ui.py                    #     PyQt5 GUI (초기 버전)
+│   │   ├── OBC_FAULT_LOGIC.vcxproj       #     Visual Studio 프로젝트 파일
+│   │   └── OBC_FAULT_LOGIC.vcxproj.filters #   VS 프로젝트 필터
+│   └── 📂 data/                          #   테스트 데이터
+│       └── fault_no7.csv                 #     Fault 0x07 테스트 입력
 │
-├── 📂 final/htw/                 # ✅ 최종 통합 버전
-│   ├── 📂 code/                  #   통합 소스코드 + pyqt_ui.py (최종 GUI)
-│   ├── 📂 data/                  #   검증용 데이터 (Fault1~4.csv)
-│   └── 📂 exe/                   #   빌드된 실행 파일
+├── 📂 final/htw/                         # ✅ 최종 통합 버전
+│   ├── 📂 code/                          #   최종 GUI
+│   │   └── pyqt_ui.py                    #     PyQt5 GUI (최종 통합 버전)
+│   ├── 📂 data/                          #   검증용 데이터
+│   │   ├── Fault1.csv
+│   │   ├── Fault2.csv
+│   │   ├── Fault3.csv
+│   │   └── Fault4.csv
+│   └── 📂 exe/                           #   빌드된 최종 실행 파일
+│       ├── fault.c                       #     통합 고장 진단 로직
+│       ├── fault.h                       #     통합 헤더
+│       ├── fault_test.c                  #     통합 테스트
+│       ├── input.c                       #     입력 모듈
+│       ├── input.h                       #     입력 헤더
+│       └── main.c                        #     통합 메인
 │
-└── 📂 obc_git/                   # 🔧 멀티파일 고장 감지기
-    ├── multi_file_fault_detector.c
-    └── run_analysis.bat          #   자동 실행 배치 스크립트
+└── 📂 obc_git/                           # 🔧 멀티파일 고장 감지기
+    ├── multi_file_fault_detector.c       #   다중 CSV 자동 분석 엔진
+    └── run_analysis.bat                  #   자동 실행 배치 스크립트
 ```
 
 ---
@@ -156,7 +178,7 @@ stateDiagram-v2
 
 ```bash
 # Visual Studio 프로젝트 빌드 또는 직접 컴파일
-gcc -o fault_engine.exe lhj/main.c lhj/fault.c lhj/input.c -lm
+gcc -o fault_engine.exe final/htw/exe/main.c final/htw/exe/fault.c final/htw/exe/input.c -lm
 
 # 실행
 fault_engine.exe <input.csv> <result.csv>
@@ -189,7 +211,9 @@ python final/htw/code/pyqt_ui.py
     <td align="center">
       <strong>한태우 (htw)</strong><br/>
       개별 고장 코드 개발<br/>
-      최종 통합 & PyQt GUI
+      PyQt5 GUI 개발<br/>
+      .exe 실행 파일 빌드<br/>
+      최종 통합
     </td>
     <td align="center">
       <strong>이현준 (lhj)</strong><br/>
