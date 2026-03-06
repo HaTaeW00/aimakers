@@ -114,7 +114,7 @@ aimakers/
 │   ├── 📂 fault_log_data/        #   테스트용 고장 데이터 (CSV)
 │   └── 📂 OBC_FAULT_LOGIC/       #   Visual Studio 프로젝트
 │
-├── 📂 htw/                       # 🧑‍💻 한태우 — 개별 고장 코드 개발
+├── 📂 htw/                       # 🧑‍💻 하태우 — 개별 고장 코드 개발
 │   ├── 📂 code/                  #   고장별 진단 코드 (fault_no7.c, fault_no8.c)
 │   └── 📂 data/                  #   테스트 데이터 (fault_no7.csv)
 │
